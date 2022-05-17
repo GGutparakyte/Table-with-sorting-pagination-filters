@@ -1,30 +1,43 @@
-import React, { Fragment } from "react";
+import React from "react";
+import {
+  TableContainer,
+  Paper,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Table,
+} from "@mui/material";
 
-const Table = ({ data }) => {
+const TableData = ({ data }) => {
   return (
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(({ id, name, region, area }) => (
-            <Fragment key={id}>
-              <tr>
-                <td style={{fontWeight: 700}}>{name}</td>
-              </tr>
-              <tr>
-                <td>{region}</td>
-              </tr>
-              <tr>
-                <td>{area}</td>
-              </tr>
-            </Fragment>
+    <TableContainer component={Paper} sx={{ maxWidth: 850 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center" sx={{ fontWeight: 700 }}>
+              Name
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: 700 }}>
+              Region
+            </TableCell>
+            <TableCell align="center" sx={{ fontWeight: 700 }}>
+              Area
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map(({ name, region, area }) => (
+            <TableRow key={name}>
+              <TableCell align="center">{name}</TableCell>
+              <TableCell align="center">{region}</TableCell>
+              <TableCell align="center">{area}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
-export default Table;
+export default TableData;

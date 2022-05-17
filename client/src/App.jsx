@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import Table from "./components/Table";
+import TableData from "./components/Table";
 import { FaSortAlphaDown } from "react-icons/fa";
 import { FaSortAlphaUpAlt } from "react-icons/fa";
-import Pagination from "./components/Pagination";
+import PaginationButtons from "./components/Pagination";
+import { Box, Button, CssBaseline } from "@mui/material";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -70,28 +71,51 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <form>
-        <button type="button" onClick={() => filterCountriesByArea()}>
-          Filter By Area
-        </button>
-        <button type="button" onClick={() => filterOceaniaCountries()}>
-          Filter Countries From Oceania Region
-        </button>
-        <button type="button" onClick={() => sortByName("name")}>
-          Sort by Name{" "}
-          {order === "ASC" ? <FaSortAlphaDown /> : <FaSortAlphaUpAlt />}
-        </button>
-        <Table data={currentPosts} />
-        <Pagination
+    <>
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "50vw",
+          m: "auto",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="outlined"
+            type="button"
+            onClick={() => filterCountriesByArea()}
+          >
+            Filter By Area
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => filterOceaniaCountries()}
+          >
+            Filter Countries From Oceania Region
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => sortByName("name")}
+          >
+            Sort by Name{" "}
+            {order === "ASC" ? <FaSortAlphaDown /> : <FaSortAlphaUpAlt />}
+          </Button>
+        </Box>
+        <TableData data={currentPosts} />
+        <PaginationButtons
           postsPerPage={postsPerPage}
           totalPosts={data.length}
           paginate={paginate}
           goToNextPage={goToNextPage}
           goToPreviousPage={goToPreviousPage}
         />
-      </form>
-    </div>
+      </Box>
+    </>
   );
 };
 
