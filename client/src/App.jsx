@@ -2,10 +2,25 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 import Table from "./components/Table";
+import { FaSortAlphaDown } from "react-icons/fa";
+import { FaSortAlphaUpAlt } from "react-icons/fa";
 
 const App = () => {
-  const [data, setData] = useState([]);
+const [data, setData] = useState([]);
+const [order, setOrder] = useState('ASC');
 
+const sortByName = (name) => {
+    if (order === 'ASC') {
+      const sortedASC = [...data].sort((a, b) => a[name].toLowerCase() > b[name].toLowerCase() ? 1 : -1)
+      setData(sortedASC);
+      setOrder('DSC');
+    } else if (order === 'DSC') {
+      const sortedDSC = [...data].sort((a, b) => a[name].toLowerCase() < b[name].toLowerCase() ? 1 : -1)
+      setData(sortedDSC);
+      setOrder('ASC');
+    }
+    return 0;
+  }
 
   useEffect(() => {
     (async () => {
@@ -21,7 +36,12 @@ const App = () => {
 
   return (
     <div>
-      <form>
+        <form>
+        <button
+          type="button"
+          onClick={() => sortByName('name')}>
+          Sort by Name {order === 'ASC' ? <FaSortAlphaDown /> : <FaSortAlphaUpAlt />}
+        </button>
         <Table data={data} />
       </form >
     </div >
